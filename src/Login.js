@@ -15,8 +15,8 @@ const Login = () => {
   }, [user, navigate]);
   const [openModal, setOpenModal] = useState({});
   const initialState = {
-    name: "john smith",
-    place: "mumbai",
+    name: "",
+    place: "",
     photo: "",
   };
   const [userInfo, setUserInfo] = useState(initialState);

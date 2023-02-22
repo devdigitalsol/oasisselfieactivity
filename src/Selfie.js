@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import templateImg from "./assets/template.png";
 import { Context } from "./context";
 import html2canvas from "html2canvas";
+import axios from "axios";
 const Selfie = () => {
   const navigate = useNavigate();
   const { user } = useContext(Context);
@@ -27,17 +28,45 @@ const Selfie = () => {
     })
       .then((canvas) => {
         var myImage = canvas.toDataURL("image/jpeg", 1);
-        const link = document.createElement("a");
-        link.href = myImage;
-        link.target = "_blank";
-        link.setAttribute("download", "image.jpeg");
-        document.body.appendChild(link);
-        link.click();
+        uploadData(myImage);
+        // const link = document.createElement("a");
+        // link.href = myImage;
+        // link.target = "_blank";
+        // link.setAttribute("download", "image.jpeg");
+        // document.body.appendChild(link);
+        // link.click();
       })
       .catch(function (error) {
         console.log(error);
         alert("oops, something went wrong!", error);
       });
+  };
+
+  const uploadData = async (img) => {
+    const data = {
+      name: user?.name,
+      place: user?.place,
+      photo: img,
+    };
+    await axios
+      .post("https://www.oasisengagement.in/selfie/insert.php", data)
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          const link = document.createElement("a");
+          link.href = `https://www.oasisengagement.in/selfie/${response.data.path}`;
+          link.target = "_blank";
+          link.setAttribute("download", "image.jpeg");
+          document.body.appendChild(link);
+          link.click();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const resetPage = () => {
+    window.location.reload();
   };
   return (
     <div className="screen screen-selfie">
@@ -51,9 +80,21 @@ const Selfie = () => {
         </div>
         <img src={templateImg} alt="template" />
       </div>
-      <button className="btn2" onClick={downloadImage}>
-        Download
-      </button>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "1rem",
+        }}
+      >
+        <button className="btn2" onClick={resetPage}>
+          Reset
+        </button>
+        <button className="btn2" onClick={downloadImage}>
+          Download
+        </button>
+      </div>
     </div>
   );
 };
