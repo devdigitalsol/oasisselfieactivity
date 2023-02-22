@@ -49,7 +49,7 @@ const Selfie = () => {
       photo: img,
     };
     await axios
-      .post("https://www.oasisengagement.in/selfie/insert.php", data)
+      .post("insert.php", data)
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
