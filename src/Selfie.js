@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import download from "downloadjs";
 import { useNavigate } from "react-router-dom";
-import templateImg from "./assets/template.png";
+import newtemplateImg from "./assets/newtemplate.png";
 import { Context } from "./context";
 import html2canvas from "html2canvas";
 import ciplalogo from "./assets/ciplalogo.svg";
@@ -94,7 +94,7 @@ const Selfie = () => {
                 <div className="userName">{user?.name}</div>
                 <div className="userPlace">{user?.place}</div>
               </div>
-              <img src={templateImg} alt="template" />
+              <img src={newtemplateImg} alt="template" />
             </div>
           </div>
           <div
